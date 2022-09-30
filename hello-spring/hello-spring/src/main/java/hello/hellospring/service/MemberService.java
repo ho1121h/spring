@@ -12,12 +12,12 @@ import java.util.Optional;
 /**
  *  간단하게 테스트 해보기 : ctrl + shift + T
  */
-@Service // 컨테이너에 등록시킴
+//@Service // 컨테이너에 등록시킴
 
 public class MemberService {// final = 여러 컨텍스트에서 한번만 할당되는 엔티티를 정의
-    private final MemberRepository memberRepository;
+    private  MemberRepository memberRepository;
 
-    @Autowired // MemberReository를 서비스에 등록
+//    @Autowired // MemberReository를 서비스에 등록
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
