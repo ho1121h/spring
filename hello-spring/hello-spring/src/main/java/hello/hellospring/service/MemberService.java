@@ -5,6 +5,7 @@ import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +14,7 @@ import java.util.Optional;
  *  간단하게 테스트 해보기 : ctrl + shift + T
  */
 //@Service // 컨테이너에 등록시킴
-
+@Transactional
 public class MemberService {// final = 여러 컨텍스트에서 한번만 할당되는 엔티티를 정의
     private  MemberRepository memberRepository;
 
