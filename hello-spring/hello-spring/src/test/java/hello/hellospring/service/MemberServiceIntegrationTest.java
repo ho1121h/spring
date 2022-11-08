@@ -22,10 +22,6 @@ class MemberServiceIntegrationTest {
     //서비스 및 레포지토리
     @Autowired
     MemberRepository memberRepository;
-
-
-
-
     @Test
 
     void 회원가입() {
