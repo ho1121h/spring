@@ -40,7 +40,7 @@ public class TokenProvider implements InitializingBean {
         this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
     }
 
-    @Override
+    @Override //오버라이드 한 이유: 의존성 주입까지 끝낸 이후 주입받은 시크릿 값을 디코딩 후 key 변수에 할당하기 위함이다.
     public void afterPropertiesSet() {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         this.key = Keys.hmacShaKeyFor(keyBytes);
@@ -62,7 +62,7 @@ public class TokenProvider implements InitializingBean {
                 .compact();
     }
 
-    public Authentication getAuthentication(String token) {
+    public Authentication getAuthentication(String token) { //이 메소드는 토큰에 담겨있는 권한 정보들을 이용해 Authentication 객체를 리턴
         Claims claims = Jwts
                 .parserBuilder()
                 .setSigningKey(key)
@@ -70,17 +70,17 @@ public class TokenProvider implements InitializingBean {
                 .parseClaimsJws(token)
                 .getBody();
 
-        Collection<? extends GrantedAuthority> authorities =
+        Collection<? extends GrantedAuthority> authorities = //토큰을 받은 후 클레임 생성
                 Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        User principal = new User(claims.getSubject(), "", authorities);
+        User principal = new User(claims.getSubject(), "", authorities); // 권한을 이용해 유저 객체 생성
 
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 
-    public boolean validateToken(String token) {
+    public boolean validateToken(String token) { // 토큰의 유효성 검증
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
