@@ -17,4 +17,6 @@ public class Application { // main 클래스
  * 내장 was 를 써야하는 이유는 베포가 편함
  *
  * http://localhost:8080/h2-console/
+ * JDBC URL : jdbc:h2:mem:testdb
+ * 글 등록 하고 싶으면 , user 테이블가서 update set role = 'USER';
  */
